@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <style>table th, table td {padding: 5px;}</style>
+</head>
+<body>
+<table border="users">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>last name</th>
+        <th>email</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+    </tr>
+
+    <tr th:each="user :${adminusers}">
+        <td th:utext="${user.getId()}">Id</td>
+        <td th:utext="${user.getName()}">Name</td>
+        <td th:utext="${user.getLastName()}">Last name</td>
+        <td th:utext="${user.getEmail()}">Email</td>
+        <td th:utext="${user.getUsername()}">Username</td>
+        <td th:utext="${user.getPassword()}">Password</td>
+        <td th:utext="${user.getRoles()}"> Role </td>
+
+        <td> <a th:href="@{/admin/user/{id}(id=${user.getId()})}"> Get user</a></td>
+    </tr>
+
+</table>
+
+<br/>
+
+<title> New User: </title>
+<a th:href="@{/admin/new}"> Create new User </a>
+
+<br/>
+
+<title> Logout:</title>
+<a th:href="@{/logout}"> Good Bye!</a>
+
+</body>
+</html>
