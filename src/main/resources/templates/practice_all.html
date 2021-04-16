@@ -78,6 +78,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
 
                                 </tr>
                             </thead>
@@ -90,7 +91,8 @@
                                     <td th:utext="${users.get().getEmail()}">Email</td>
                                     <td th:utext="${users.get().getRoleToString()}"> Role </td>
 
-                                    <td> <a th:href="@{/admin/user/{id}(id=${users.get().getId()})}"> Get user</a></td>
+                                    <td> <button class="btn btn-primary" th:href="@{/admin/user/{id}(id=${users.get().getId()})}"> Get user </button></td>
+                                    <td> <button class="btn btn-danger" th:method="POST" th:action="@{/admin/user/{id}/delete(id=${users.get().getId()})}"> Delete user </button></td>
                                 </tr>
                             </tbody>
 
