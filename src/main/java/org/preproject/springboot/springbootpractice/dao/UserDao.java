@@ -20,6 +20,8 @@ public interface UserDao {
 
     Optional<User> findByUsername(String username);
 
+    Optional<User> findByEmail(String email);
+
     List<Role> getRoleList();
 
     Role getRole(String role);

@@ -1,15 +1,14 @@
 package org.preproject.springboot.springbootpractice.service;
 
 import org.preproject.springboot.springbootpractice.dao.UserDao;
+import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +24,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        User user = findByEmail(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", usernameOrEmail)));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
+
 
     @Override
     public User getUserById(Long id) {
@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> findByUsername(String username){return service.findByUsername(username);}
+
+    @Override
+    public Optional<User> findByEmail(String email){return service.findByEmail(email);}
 
     @Override
     @Transactional
@@ -63,12 +66,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<Role> getRoleList() {
-        return null;
+        return service.getRoleList();
     }
 
     @Override
     public Role getRole(String role) {
-        return null;
+        return service.getRole(role);
     }
 
 }

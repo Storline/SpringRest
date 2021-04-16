@@ -126,4 +126,14 @@ public class User implements UserDetails {
                 ", roles=" + roles +
                 '}';
     }
+
+    public String getRoleToString(){
+        StringBuilder roles = new StringBuilder();
+        for(Role role : getRoles()) {
+            roles.append(role.getRole()
+                    .replaceAll("ROLE_", "")).append(" ");
+        }
+        return roles.toString();
+    }
+
 }

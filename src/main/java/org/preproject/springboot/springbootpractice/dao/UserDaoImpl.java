@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findByUsername(String username) {
         User user = null;
         try{
-            user =  (User) em.createQuery("select user from User user where user.username = :username")
+            user =  (User) em.createQuery("select user from User user inner join fetch user.roles as roles where user.username = :username")
                     .setParameter("username", username)
                     .getSingleResult();
         } catch (Exception e) {
@@ -57,12 +57,30 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        User user = null;
+        try{
+            user =  (User) em.createQuery("select user from User user inner join fetch user.roles as roles where user.email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(user);
+    }
+
+    @Override
     public List<Role> getRoleList() {
-        return null;
+        return em
+                .createQuery("select r from Role r", Role.class)
+                .getResultList();
     }
 
     @Override
     public Role getRole(String role) {
-        return null;
+        return em
+                .createQuery("select r from Role r where r.role=:role", Role.class)
+                .setParameter("role", role)
+                .getSingleResult();
     }
 }

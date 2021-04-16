@@ -1,11 +1,15 @@
 package org.preproject.springboot.springbootpractice.controllers;
 
+import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
 import org.preproject.springboot.springbootpractice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,9 +30,9 @@ public class AdminController {
     }
 
     @PostMapping("")
-    public String addUser(User user/*, @RequestParam(value = "role") String... roles*/){
+    public String addUser(User user, @RequestParam(value = "role") String... roles){
 //        user.getRoles().add(new Role(roles));
-
+        user.setRoles(Arrays.stream(roles).map(userService::getRole).collect(Collectors.toSet()));
         userService.saveUser(user);
         return "redirect:/admin";
     }
