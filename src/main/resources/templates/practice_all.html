@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-    <title>Title</title>
+    <title>Admin panel</title>
 </head>
 <body>
 
@@ -32,64 +32,75 @@
     </nav>
 </header>
 
-<div class="d-flex flex-column p-3 text-white bg-dark" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link active">
-                <svg class="bi me-2" width="16" height="16"></svg>
-                Admin
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16"></svg>
-                User
-            </a>
-        </li>
+<div class="row">
+    <div class="col-md-3">
+            <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 280px;">
+                <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="/practice" class="nav-link active">
+                                <svg class="bi me-2" width="16" height="16"></svg>
+                                Admin
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/userpage" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16"></svg>
+                                User
+                            </a>
+                        </li>
+                    </ul>
+                <hr>
+            </div>
+    </div>
 
-    </ul>
-    <hr>
-</div>
-<div class="container mt-1">
-    <div class="card">
 
-        <div class="card-block">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Last name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Edit</th>
+        <div class="col-md-8">
+            <div class="container align-content-center mt-1">
 
-                </tr>
+                <div>
+                    <h1 class="font-weight-bolder">Admin panel</h1>
+                </div>
 
-                </thead>
-                <tbody>
-                <tr th:each="user :${users}">
-                    <td th:utext="${users.get().getId()}">Id</td>
-                    <td th:utext="${users.get().getName()}">Name</td>
-                    <td th:utext="${users.get().getLastName()}">Last name</td>
-                    <td th:utext="${users.get().getEmail()}">Email</td>
-                    <td th:utext="${users.get().getRoleToString()}"> Role </td>
+                <div class="card">
+                    <div class="card-block">
 
-                    <td> <a th:href="@{/admin/user/{id}(id=${users.get().getId()})}"> Get user</a></td>
-                </tr>
+                        <div>
+                            <h3 class="font-weight-normal">All users</h3>
+                        </div>
 
-                </tbody>
-            </table>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Last name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Edit</th>
 
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="user :${users}">
+                                    <td th:utext="${users.get().getId()}">Id</td>
+                                    <td th:utext="${users.get().getName()}">Name</td>
+                                    <td th:utext="${users.get().getLastName()}">Last name</td>
+                                    <td th:utext="${users.get().getEmail()}">Email</td>
+                                    <td th:utext="${users.get().getRoleToString()}"> Role </td>
+
+                                    <td> <a th:href="@{/admin/user/{id}(id=${users.get().getId()})}"> Get user</a></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
