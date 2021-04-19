@@ -1,46 +1,46 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Update User</title>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Update User</title>-->
+<!--</head>-->
+<!--<body>-->
 
-<form th:method="POST" th:action="@{/admin/user/{id}/edit(id=${user.getId()})}" th:object="${user}" >
+<!--<form th:method="POST" th:action="@{/admin/user/{id}/edit(id=${user.getId()})}" th:object="${user}" >-->
 
-    <label for="name"> Name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
+<!--    <label for="name"> Name: </label>-->
+<!--    <input type="text" th:field="*{name}" id="name"/>-->
 
-    <br/>
+<!--    <br/>-->
 
-    <label for="lastname"> Last name: </label>
-    <input type="text" th:field="*{lastName}" id="lastname"/>
+<!--    <label for="lastname"> Last name: </label>-->
+<!--    <input type="text" th:field="*{lastName}" id="lastname"/>-->
 
-    <br/>
+<!--    <br/>-->
 
-    <label for="email"> Email: </label>
-    <input type="text" th:field="*{email}" id="email">
+<!--    <label for="email"> Email: </label>-->
+<!--    <input type="text" th:field="*{email}" id="email">-->
 
-    <br/>
+<!--    <br/>-->
 
-    <label for="username"> Username: </label>
-    <input type="text" th:field="*{username}" id="username">
+<!--    <label for="username"> Username: </label>-->
+<!--    <input type="text" th:field="*{username}" id="username">-->
 
-    <br/>
+<!--    <br/>-->
 
-    <label for="password"> Password: </label>
-    <input type="text" th:field="*{password}" id="password">
+<!--    <label for="password"> Password: </label>-->
+<!--    <input type="text" th:field="*{password}" id="password">-->
 
-    <br/>
+<!--    <br/>-->
 
-    <input type="submit" value="Update User"/>
-</form>
+<!--    <input type="submit" value="Update User"/>-->
+<!--</form>-->
 
-<br/>
+<!--<br/>-->
 
-<form th:method="POST" th:action="@{/admin/user/{id}/delete(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
-</form>
+<!--<form th:method="POST" th:action="@{/admin/user/{id}/delete(id=${user.getId()})}">-->
+<!--    <input type="submit" value="Delete"/>-->
+<!--</form>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,27 +28,29 @@ public class AdminController {
     @GetMapping("/new")
     public String newUserForm(Model model){
         model.addAttribute("newuser", new User());
-        return "adminadduser";
+        return "redirect:/admin";
     }
 
     @PostMapping("")
     public String addUser(User user, @RequestParam(value = "role") String... roles){
-//        user.getRoles().add(new Role(roles));
         user.setRoles(Arrays.stream(roles).map(userService::getRole).collect(Collectors.toSet()));
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("")
-    public String listUsers(Model model){
+    public String listUsers(Model model, Principal principal){
+        Optional<User> username = userService.findByUsername(principal.getName());
+        model.addAttribute("adminuser", username);
         model.addAttribute("adminusers", userService.getAllUsers());
+        model.addAttribute("newUser", new User());
         return "adminpage";
     }
 
     @GetMapping("/user/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id){
         model.addAttribute("user", userService.getUserById(id));
-        return "adminedituser";
+        return "redirect/admin";
     }
 
     @PostMapping("/user/{id}/edit")
@@ -58,7 +62,7 @@ public class AdminController {
     @RequestMapping(value = "/user/{id}", method = {RequestMethod.GET, RequestMethod.PUT})
     public String getUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute(userService.getUserById(id));
-        return "admingetuser";
+        return "redirect:/admin";
     }
 
     @PostMapping("/user/{id}/delete")

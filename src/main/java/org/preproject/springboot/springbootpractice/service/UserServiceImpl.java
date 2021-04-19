@@ -18,14 +18,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDao service;
 
+
     public UserServiceImpl(UserDao service){
         this.service = service;
     }
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        User user = findByEmail(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", usernameOrEmail)));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 
