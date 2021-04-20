@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -34,8 +35,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return em.createQuery("select u from User u left join fetch u.roles as roles", User.class)
-                .getResultList();
+        return em.createQuery("select u from User u left outer join fetch u.roles as roles", User.class)
+                .getResultList()
+                .stream().distinct()
+                .collect(Collectors.toList());
     }
 
     @Override
