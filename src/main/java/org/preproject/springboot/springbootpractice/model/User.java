@@ -28,11 +28,10 @@ public class User implements UserDetails {
     private String password;
 
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "user_roles_boot",
             joinColumns = @JoinColumn(name = "user_id_boot", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id_boot", referencedColumnName = "id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"role_id_boot", "user_id_boot"})})
+            inverseJoinColumns = @JoinColumn(name = "role_id_boot", referencedColumnName = "id"))
     private Set<Role> roles;
 
     public User(){}
@@ -109,7 +108,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     public String getPassword() {
