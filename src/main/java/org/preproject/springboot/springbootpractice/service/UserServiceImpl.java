@@ -69,10 +69,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateUser(Long id, User updatedUser) {
+    public void updateUser(User updatedUser) {
         updatedUser.setRoles(Collections.singleton(new Role()));
         updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        service.updateUser(id, updatedUser);
+        service.updateUser(updatedUser);
     }
 
     @Override

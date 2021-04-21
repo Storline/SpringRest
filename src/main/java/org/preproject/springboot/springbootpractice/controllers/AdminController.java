@@ -1,6 +1,5 @@
 package org.preproject.springboot.springbootpractice.controllers;
 
-import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
 import org.preproject.springboot.springbootpractice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,9 +28,8 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("")
-    public String addUser(User user, @RequestParam(value = "role") String... roles){
-        user.setRoles(Arrays.stream(roles).map(userService::getRole).collect(Collectors.toSet()));
+    @PostMapping("/new")
+    public String addUser(User user, @RequestParam(value = "newRole", required = false) String[] role){
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -47,26 +43,26 @@ public class AdminController {
         return "adminpage";
     }
 
-    @GetMapping("/user/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id){
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam (value = "id") Long id){
         model.addAttribute("user", userService.getUserById(id));
-        return "redirect/admin";
-    }
-
-    @PostMapping("/user/{id}/edit")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id){
-        userService.updateUser(id, user);
         return "redirect:/admin";
     }
 
-    @RequestMapping(value = "/user/{id}", method = {RequestMethod.GET, RequestMethod.PUT})
-    public String getUserById(@PathVariable("id") Long id, Model model) {
+    @PostMapping("/edit")
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam(name = "allRoles", required = false) String[] roles){
+        userService.updateUser(user);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/{id}")
+    public String getUserById(@RequestParam("id") Long id, Model model) {
         model.addAttribute(userService.getUserById(id));
         return "redirect:/admin";
     }
 
-    @PostMapping("/user/{id}/delete")
-    public String removeUser(@PathVariable("id") Long id){
+    @PostMapping("/delete")
+    public String removeUser(@RequestParam (value = "id") Long id){
         userService.removeUserById(id);
         return "redirect:/admin";
     }

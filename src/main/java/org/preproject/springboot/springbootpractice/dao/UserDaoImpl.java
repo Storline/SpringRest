@@ -35,14 +35,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return em.createQuery("select u from User u left outer join fetch u.roles as roles", User.class)
+        return em.createQuery("from User", User.class)
                 .getResultList()
                 .stream().distinct()
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void updateUser(Long id, User updatedUser) {
+    public void updateUser(User updatedUser) {
         em.merge(updatedUser);
     }
 

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "user")
 public class User implements UserDetails {
 
     @Id
@@ -26,13 +27,25 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles_boot",
-            joinColumns = @JoinColumn(name = "user_id_boot"),
-            inverseJoinColumns = @JoinColumn(name = "role_id_boot"))
+            joinColumns = @JoinColumn(name = "user_id_boot", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id_boot", referencedColumnName = "id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"role_id_boot", "user_id_boot"})})
     private Set<Role> roles;
 
     public User(){}
+
+    public User(Long id, String name, String lastName, String email, String username, String password, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
@@ -100,7 +113,7 @@ public class User implements UserDetails {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {

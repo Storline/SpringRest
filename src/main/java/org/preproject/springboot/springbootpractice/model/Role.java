@@ -2,12 +2,11 @@ package org.preproject.springboot.springbootpractice.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "role")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -16,9 +15,21 @@ public class Role implements GrantedAuthority {
 
     private String role;
 
-    public Role(String[] roles){}
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     public Role() {
+    }
+
+
+    public Role(String role) {
+        if (role.contains("ADMIN")) {
+            this.id = 1L;
+        } else if (role.contains("USER")) {
+            this.id = 2L;
+        }
+        this.role = role;
     }
 
     public Long getId() {
@@ -37,6 +48,13 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
     @Override
     public String getAuthority() {
