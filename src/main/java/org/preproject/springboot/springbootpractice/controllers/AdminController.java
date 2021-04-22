@@ -1,5 +1,6 @@
 package org.preproject.springboot.springbootpractice.controllers;
 
+import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
 import org.preproject.springboot.springbootpractice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +31,7 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String addUser(User user, @RequestParam(value = "newRole", required = false) String[] role){
+    public String addUser(User user){
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -40,6 +42,8 @@ public class AdminController {
         model.addAttribute("adminuser", username);
         model.addAttribute("adminusers", userService.getAllUsers());
         model.addAttribute("newUser", new User());
+        List<Role> roles = userService.getRoleList();
+        model.addAttribute("allRoles", roles);
         return "adminpage";
     }
 
@@ -50,7 +54,7 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam(name = "allRoles", required = false) String[] roles){
+    public String updateUser(@ModelAttribute("user") User user){
         userService.updateUser(user);
         return "redirect:/admin";
     }

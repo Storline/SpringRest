@@ -72,7 +72,7 @@
                                     <th>ID</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
-                                    <th>Age</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Edit</th>
@@ -82,7 +82,7 @@
                                 <tbody>
                                 <tr th:each ="user : ${adminusers}">
                                     <td th:utext="${user.getId()}"></td>
-                                    <td th:utext="${user.getUsername()}"></td>
+                                    <td th:utext="${user.getName()}"></td>
                                     <td th:utext="${user.getLastName()}"></td>
                                     <td th:utext="${user.getUsername()}"></td>
                                     <td th:utext="${user.getEmail()}"></td>
@@ -118,7 +118,7 @@
                                                                     <div class="form-group">
                                                                         <label for="usersName">First name</label>
                                                                         <input class="form-control" type="text"
-                                                                               id="usersName" name="usersName"
+                                                                               id="usersName" name="name"
                                                                                th:value="${user.name}"/>
                                                                     </div>
 
@@ -126,7 +126,7 @@
                                                                         <label for="userLastName">Last name</label>
                                                                         <input class="form-control" type="text"
                                                                                th:value="${user.lastName}"
-                                                                               id="userLastName" name="userLastName"/>
+                                                                               id="userLastName" name="lastName"/>
                                                                     </div>
 
 
@@ -135,29 +135,32 @@
                                                                         <label for="userEmail">Email</label>
                                                                         <input class="form-control" type="text"
                                                                                th:value="${user.email}"
-                                                                               id="userEmail" name="userEmail"/>
+                                                                               id="userEmail" name="email"/>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="usersUsername">Username</label>
                                                                         <input class="form-control" type="text"
                                                                                th:value="${user.username}"
-                                                                               id="usersUsername" name="usersUsername"/>
+                                                                               id="usersUsername" name="username"/>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="userPassword">Password</label>
                                                                         <input class="form-control" type="password"
                                                                                th:value="${user.password}"
-                                                                               id="userPassword" name="userPassword" />
+                                                                               id="userPassword" name="password" />
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="editRole">Role</label>
                                                                         <select id="editRole" class="form-control" size="2"
+                                                                                th:value="${user.getRoles()}"
                                                                                 name="roles"  multiple required>
-                                                                            <option value="ROLE_ADMIN">ADMIN</option>
-                                                                            <option value="ROLE_USER">USER</option>
+                                                                            <option th:each="initRoles :${user.roles}"
+                                                                                    th:value="${initRoles.id}">
+                                                                                    th:text="${initRoles.role}">
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </form>
@@ -210,47 +213,61 @@
                                                                     <fieldset disabled>
 
                                                                         <div class="form-group">
-                                                                            <label>ID</label>
-                                                                            <input class="form-control" type="text"
-                                                                                   th:value="${user.id}"
-                                                                                   name="id"/>
+<!--                                                                            <label>ID</label>-->
+                                                                            <label> ID
+                                                                                <input class="form-control" type="text"
+                                                                                       th:value="${user.id}"
+                                                                                       name="id"/>
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label>First name</label>
-                                                                            <input class="form-control" type="text"
-                                                                                   th:value="${user.name}"
-                                                                                   name="name"/>
+<!--                                                                            <label>First name</label>-->
+                                                                            <label> First name
+                                                                                <input class="form-control" type="text"
+                                                                                       th:value="${user.name}"
+                                                                                       name="name"/>
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label>Last name</label>
-                                                                            <input class="form-control" type="text"
-                                                                                   th:value="${user.lastName}"
-                                                                                   name="lastname"/>
+<!--                                                                            <label>Last name</label>-->
+                                                                            <label> Last name
+                                                                                <input class="form-control" type="text"
+                                                                                       th:value="${user.lastName}"
+                                                                                       name="lastName"/>
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label>Email</label>
-                                                                            <input class="form-control" type="text"
-                                                                                   th:value="${user.email}"
-                                                                                   name="email"/>
+<!--                                                                            <label>Email</label>-->
+                                                                            <label> Email
+                                                                                <input class="form-control" type="text"
+                                                                                       th:value="${user.email}"
+                                                                                       name="email"/>
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label>Username</label>
-                                                                            <input class="form-control" type="text"
-                                                                                   th:value="${user.username}"
-                                                                                   name="username"/>
+<!--                                                                            <label>Username</label>-->
+                                                                            <label> Username
+                                                                                <input class="form-control" type="text"
+                                                                                       th:value="${user.username}"
+                                                                                       name="username"/>
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label>Role</label>
-                                                                            <select id="delRole" class="form-control" size="2"
-                                                                                    name="roles" multiple  required>
-                                                                                <option value="ROLE_ADMIN">ADMIN</option>
-                                                                                <option value="ROLE_USER">USER</option>
-                                                                            </select>
+                                                                            <label for="delRole">Role
+                                                                                <select id="delRole" class="form-control" size="2"
+                                                                                        th:value="${user.getRoles()}"
+                                                                                        name="roles"  multiple required>
+                                                                                    <option th:each="initRoles :${user.roles}"
+                                                                                            th:value="${initRoles.id}">
+                                                                                        th:text="${initRoles.role}">
+                                                                                    </option>
+                                                                                </select>
+                                                                            </label>
                                                                         </div>
                                                                     </fieldset>
                                                                 </form>
@@ -323,15 +340,19 @@
                                     </div>
                                     <br>
                                     <div class="form-group">
-                                        <label>Role</label>
+                                        <label for="addRole">Role
                                         <select id="addRole" class="form-control" size="2"
-                                                name="roles" multiple required>
-                                            <option value="ROLE_ADMIN">ADMIN</option>
-                                            <option value="ROLE_USER">USER</option>
+                                                name="roles"
+                                                multiple required>
+                                            <option th:each="role :${allRoles}"
+                                                    th:value="${role.getId()}"
+                                                    th:text="${role.getRole()}"> Role
+                                            </option>
                                         </select>
+                                        </label>
                                     </div>
                                     <br>
-                                    <input input class="btn btn-success" type="submit" value="Add new user"/>
+                                    <input class="btn btn-success" type="submit" value="Add new user"/>
                                 </form>
                             </div>
                         </div>
