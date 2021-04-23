@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void saveUser(User user) {
-        user.setRoles(Collections.singleton(new Role()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         service.saveUser(user);
     }
@@ -70,7 +69,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void updateUser(User updatedUser) {
-        updatedUser.setRoles(Collections.singleton(new Role()));
         updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         service.updateUser(updatedUser);
     }
@@ -83,6 +81,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Role getRole(String role) {
         return service.getRole(role);
+    }
+
+    @Override
+    public Role getRoleById(Long id){
+        return service.getRoleById(id);
     }
 
 }

@@ -25,4 +25,6 @@ public interface UserDao {
     List<Role> getRoleList();
 
     Role getRole(String role);
+
+    Role getRoleById(Long id);
 }

@@ -3,10 +3,11 @@ package org.preproject.springboot.springbootpractice.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -20,9 +21,9 @@ public class Role implements GrantedAuthority {
     }
 
     public Role(String role) {
-        if (role.contains("ROLE_ADMIN")) {
+        if (role.contains("ADMIN")) {
             this.id = 1L;
-        } else if (role.contains("ROLE_USER")) {
+        } else if (role.contains("USER")) {
             this.id = 2L;
         }
         this.role = role;

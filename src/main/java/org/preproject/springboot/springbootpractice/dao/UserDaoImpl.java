@@ -75,15 +75,22 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<Role> getRoleList() {
         return em
-                .createQuery("select r from Role r", Role.class)
+                .createQuery("select u from Role u", Role.class)
                 .getResultList();
     }
-
     @Override
     public Role getRole(String role) {
         return em
-                .createQuery("select r from Role r where r.role=:role", Role.class)
+                .createQuery("select u from Role u where u.role=:role", Role.class)
                 .setParameter("role", role)
+                .getSingleResult();
+    }
+
+    @Override
+    public Role getRoleById(Long id){
+        return em
+                .createQuery("select u from Role u where u.id=:id", Role.class)
+                .setParameter("id", id)
                 .getSingleResult();
     }
 }
