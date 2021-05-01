@@ -1,105 +1,94 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-    <title>Hello, User</title>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item" style="color: darkgray">
-                        <div class="navbar-brand">
-                            <span class="font-weight-bold" th:text="${user.get().email} + ' '"></span>
-                            with roles:
-                            <span th:text="${user.get().getRoleToString()} + ' '"></span>
-                        </div>
-                    </li>
-                </ul>
-                <span class="navbar-text">
-                    <form th:method="POST" th:action="@{/logout}" style="...">
-                        <input type="submit" value="logout" style="...">
-                    </form>
-                </span>
-            </div>
-        </nav>
-    </header>
-
-    <div class="row">
-        <div class="col-md-3">
-            <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 280px;">
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="/admin" class="nav-link text-white">
-                            <svg class="bi me-2" width="16" height="16"></svg>
-                            Admin
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/userpage" class="nav-link active">
-                            <svg class="bi me-2" width="16" height="16"></svg>
-                            User
-                        </a>
-                    </li>
-                </ul>
-                <hr>
-            </div>
-        </div>
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
 
-        <div class="col-md-8">
-            <div class="container align-content-center mt-1">
+<!--    <title>Hello, User</title>-->
+<!--</head>-->
+<!--<body>-->
 
-                <div>
-                    <h1 class="font-weight-bolder"> User information-panel </h1>
-                </div>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--    <div class="collapse navbar-collapse" id="navbarText">-->
+<!--        <ul class="navbar-nav mr-auto">-->
+<!--            <li class="nav-item" style="color: darkgray">-->
+<!--                <div class="navbar-brand">-->
+<!--                    <span class="font-weight-bold" th:text="${user.get().email} + ' '"></span>-->
+<!--                    with roles:-->
+<!--                    <span th:text="${user.get().getRoleToString()} + ' '"></span>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--        <span class="navbar-text">-->
+<!--            <form th:method="POST" th:action="@{/logout}" style="outline: none !important">-->
+<!--                <a id="logout" style="color: darkgrey; background: none; border: none"> Logout </a>-->
+<!--            </form>-->
+<!--        </span>-->
+<!--    </div>-->
+<!--</nav>-->
 
-                <div class="card">
+<!--<div class="container-fluid">-->
+<!--    <div class="row" style="height: 100vh">-->
 
-                    <div class="card-block">
-                        <table class="table">
-                            <div>
-                                <h3 class="font-weight-normal"> Users info </h3>
-                            </div>
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Last name</th>
-                                <th>Email</th>
-                                <th>Role</th>
+<!--        &lt;!&ndash; Left bar &ndash;&gt;-->
 
-                            </tr>
-
-                            </thead>
-                            <tbody>
-                            <tr th:each="users :${user}">
-                                <td th:utext="${user.get().id}">Id</td>
-                                <td th:utext="${user.get().name}">Name</td>
-                                <td th:utext="${user.get().lastName}">Last name</td>
-                                <td th:utext="${user.get().email}">Email</td>
-                                <td th:utext="${user.get().roleToString}"> Role </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--        <div class="col-2 pl-0 pr-0">-->
+<!--            <nav class="nav flex-column nav-pills">-->
+<!--                <a class="nav-link" href="/admin">Admin</a>-->
+<!--                <a class="nav-link active" href="/user">User</a>-->
+<!--            </nav>-->
+<!--        </div>-->
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!--        <div class="col-md-10 bg-light">-->
+<!--            <div class="container align-content-center mt-1">-->
 
-</body>
-</html>
+<!--                <div>-->
+<!--                    <h1 class="font-weight-bolder"> User information-panel </h1>-->
+<!--                </div>-->
+
+<!--                <div class="card">-->
+
+<!--                    <div class="card-block">-->
+<!--                        <table class="table">-->
+<!--                            <div>-->
+<!--                                <h3 class="font-weight-normal"> Users info </h3>-->
+<!--                            </div>-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>Id</th>-->
+<!--                                <th>Name</th>-->
+<!--                                <th>Last name</th>-->
+<!--                                <th>Email</th>-->
+<!--                                <th>Role</th>-->
+
+<!--                            </tr>-->
+
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="users :${user}">-->
+<!--                                <td th:utext="${user.get().id}">Id</td>-->
+<!--                                <td th:utext="${user.get().name}">Name</td>-->
+<!--                                <td th:utext="${user.get().lastName}">Last name</td>-->
+<!--                                <td th:utext="${user.get().email}">Email</td>-->
+<!--                                <td th:utext="${user.get().roleToString}"> Role </td>-->
+<!--                            </tr>-->
+
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+
+<!--</body>-->
+<!--</html>-->
