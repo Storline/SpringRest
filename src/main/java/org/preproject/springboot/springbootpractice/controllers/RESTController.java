@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +37,8 @@ public class RESTController {
 
     @GetMapping(value ="/infoUser")
     @ResponseBody
-    public Optional<User> infoUser(@AuthenticationPrincipal User user_authentication){
-        return userService.findByEmail(user_authentication.getEmail());
+    public Optional<User> infoUser(Principal principal){
+        return userService.findByUsername(principal.getName());
     }
 
     @GetMapping(value = "/findUser/{id}")

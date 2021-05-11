@@ -5,6 +5,7 @@ import org.preproject.springboot.springbootpractice.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +67,7 @@ public class UserDaoImpl implements UserDao {
             user =  (User) em.createQuery("select user from User user inner join fetch user.roles as roles where user.email = :email")
                     .setParameter("email", email)
                     .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NoResultException nre) {
         }
         return Optional.ofNullable(user);
     }

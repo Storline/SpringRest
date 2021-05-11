@@ -47,6 +47,28 @@
                    role="tab" onclick="showUser()">User</a>
             </nav>
         </div>
+        <script>
+            function showUser() {
+                const showUserURL = 'http://localhost:8080/rest/infoUser';
+                fetch(showUserURL)
+                    .then((res) => res.json())
+                    .then((user) => {
+
+                        let temp = "<tr>";
+                        temp += `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.lastName}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>
+                        `;
+                        temp += "<tr>";
+                        document.getElementById("userTable").innerHTML = temp;
+                    })
+            }
+            showUser();
+        </script>
 
         <div class="col-10 bg-light">
             <ul class="nav nav-tabs">
@@ -219,8 +241,6 @@
                                    resetTable();
                                }
 
-
-
                            </script>
 
                         </div>
@@ -313,29 +333,29 @@
                                 <tbody id="userTable">
                                 </tbody>
                             </table>
-                            <script>
+<!--                            <script>-->
 
-                                function showUser() {
-                                    const showUserURL = 'http://localhost:8080/rest/infoUser';
-                                    fetch(showUserURL)
-                                        .then((res) => res.json())
-                                        .then((user) => {
+<!--                                function showUser() {-->
+<!--                                    const showUserURL = 'http://localhost:8080/rest/infoUser';-->
+<!--                                    fetch(showUserURL)-->
+<!--                                        .then((res) => res.json())-->
+<!--                                        .then((user) => {-->
 
-                                            let temp = "<tr>";
-                                            temp += `
-                                                <td>${user.get().id}</td>
-                                                <td>${user.get().name}</td>
-                                                <td>${user.get().lastName}</td>
-                                                <td>${user.get().username}</td>
-                                                <td>${user.get().email}</td>
-                                                <td>${user.get().roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>
-                                            `;
-                                            temp += "<tr>";
-                                            document.getElementById("userTable").innerHTML = temp;
-                                        })
-                                }
-                                showUser();
-                            </script>
+<!--                                            let temp = "<tr>";-->
+<!--                                            temp += `-->
+<!--                                                <td>${user.get().id}</td>-->
+<!--                                                <td>${user.get().name}</td>-->
+<!--                                                <td>${user.get().lastName}</td>-->
+<!--                                                <td>${user.get().username}</td>-->
+<!--                                                <td>${user.get().email}</td>-->
+<!--                                                <td>${user.get().roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>-->
+<!--                                            `;-->
+<!--                                            temp += "<tr>";-->
+<!--                                            document.getElementById("userTable").innerHTML = temp;-->
+<!--                                        })-->
+<!--                                }-->
+<!--                                showUser();-->
+<!--                            </script>-->
 
                         </div>
                     </div>
