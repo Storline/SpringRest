@@ -194,9 +194,9 @@
                                         <label for="editUsername"><b>Username</b></label>
                                         <input class="form-control text-center" type="text" name="age"  id="editUsername">
                                         <label for="editEmail"><b>Email</b></label>
-                                        <input class="form-control text-center" type="text" name="email" id="editEmail">
+                                        <input class="form-control text-center" type="email" name="email" id="editEmail" required>
                                         <label for="editPassword"><b>Password</b></label>
-                                        <input class="form-control text-center" type="text" name="password" id="editPassword">
+                                        <input class="form-control text-center" type="password" name="password" onfocus="this.value=''" id="editPassword">
                                         <div class="pb-2">
                                         </div>
                                         <div class="form-group">
@@ -215,6 +215,7 @@
                                 </div>
                             </div>
                            <script>
+
                                function btnEdit() {
 
                                    let user = {
@@ -267,9 +268,7 @@
                                         <label for="delUsername"><b>Username</b></label>
                                         <input class="form-control text-center" type="text" name="username"  id="delUsername" readonly>
                                         <label for="delEmail"><b>Email</b></label>
-                                        <input class="form-control alert-warning text-center" type="text" name="email" id="delEmail" readonly>
-                                        <label for="delPassword"><b>Password</b></label>
-                                        <input class="form-control text-center" type="text" name="password" id="delPassword" readonly>
+                                        <input class="form-control alert-warning text-center" type="email" name="email" id="delEmail" readonly>
                                         <div class="pb-2">
                                         </div>
                                         <div class="form-group">
@@ -333,30 +332,6 @@
                                 <tbody id="userTable">
                                 </tbody>
                             </table>
-<!--                            <script>-->
-
-<!--                                function showUser() {-->
-<!--                                    const showUserURL = 'http://localhost:8080/rest/infoUser';-->
-<!--                                    fetch(showUserURL)-->
-<!--                                        .then((res) => res.json())-->
-<!--                                        .then((user) => {-->
-
-<!--                                            let temp = "<tr>";-->
-<!--                                            temp += `-->
-<!--                                                <td>${user.get().id}</td>-->
-<!--                                                <td>${user.get().name}</td>-->
-<!--                                                <td>${user.get().lastName}</td>-->
-<!--                                                <td>${user.get().username}</td>-->
-<!--                                                <td>${user.get().email}</td>-->
-<!--                                                <td>${user.get().roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>-->
-<!--                                            `;-->
-<!--                                            temp += "<tr>";-->
-<!--                                            document.getElementById("userTable").innerHTML = temp;-->
-<!--                                        })-->
-<!--                                }-->
-<!--                                showUser();-->
-<!--                            </script>-->
-
                         </div>
                     </div>
                 </div>
@@ -381,7 +356,7 @@
                                             <label for="addUsername"><b>Username</b></label>
                                             <input class="form-control" type="text" id="addUsername">
                                             <label for="addEmail"><b>Email</b></label>
-                                            <input class="form-control alert-warning" type="text"   id="addEmail">
+                                            <input class="form-control alert-warning" type="email" id="addEmail" required >
                                             <label for="addPassword"><b>Password</b></label>
                                             <input class="form-control" type="text"   id="addPassword">
                                             <div class="pb-2"></div>
@@ -455,7 +430,8 @@
 </div>
 
 <script>
-    function selectRole(r) {
+    function selectRole(r)
+    {
         let roles = [];
         if (r.indexOf("USER") >= 0) {
             roles.push({"id": 2});
@@ -466,15 +442,16 @@
         return roles;
     }
 
-    function resetTable() {
+    function resetTable()
+    {
         let table = document.getElementById('usersTable')
         if (table.rows.length > 1) {
             table.deleteRow(1);
         }
         setTimeout(getUsers, 140)
     }
-
 </script>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

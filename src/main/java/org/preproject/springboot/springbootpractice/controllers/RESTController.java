@@ -29,11 +29,6 @@ public class RESTController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value ="/user/{id}")
-    public ResponseEntity<User> showUser(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
 
     @GetMapping(value ="/infoUser")
     @ResponseBody

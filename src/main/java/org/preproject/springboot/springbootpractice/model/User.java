@@ -1,13 +1,13 @@
 package org.preproject.springboot.springbootpractice.model;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +21,8 @@ public class User implements UserDetails {
 
     private String lastName;
 
+    @Column(name = "email", unique = true)
+    @NotNull
     private String email;
 
     private String username;
@@ -28,7 +30,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles_boot",
             joinColumns = @JoinColumn(name = "user_id_boot", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id_boot", referencedColumnName = "id"))

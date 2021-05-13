@@ -4,6 +4,7 @@ import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -26,4 +27,6 @@ public interface UserService {
     Role getRole(String role);
 
     Role getRoleById(Long id);
+
+    Map<String, String> validateUser(User user);
 }

@@ -3,6 +3,7 @@ package org.preproject.springboot.springbootpractice.service;
 import org.preproject.springboot.springbootpractice.dao.UserDao;
 import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
+import org.preproject.springboot.springbootpractice.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service("userDetailsService")
 @Transactional(readOnly = true)
@@ -86,6 +85,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Role getRoleById(Long id){
         return service.getRoleById(id);
+    }
+
+    @Override
+    public Map<String, String> validateUser(User user) {
+        Map<String, String> errorMap = new HashMap<>();
+        if (user.getEmail().isEmpty()) {
+            errorMap.put("emailIsEmpty", "E-Mail Is Empty!");
+        }
+        if (!EmailValidator.validateEmail(user.getEmail())) {
+            errorMap.put("emailNotValid", "Email Not Valid!");
+        }
+        else if (service.findByEmail(user.getEmail()).isPresent()) {
+            errorMap.put("userExists", "An account for that email already exists.");
+        }
+        if (user.getName().isEmpty())
+            errorMap.put("firstNameIsEmpty", "First Name Is Empty!");
+        if (user.getLastName().isEmpty())
+            errorMap.put("lastNameIsEmpty", "Last Name Is Empty!");
+        if (user.getPassword().isEmpty())
+            errorMap.put("passwordIsEmpty", "Password Is Empty!");
+        return errorMap;
     }
 
 }
