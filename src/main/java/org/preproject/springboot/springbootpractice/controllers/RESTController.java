@@ -1,5 +1,6 @@
 package org.preproject.springboot.springbootpractice.controllers;
 
+import org.preproject.springboot.springbootpractice.exceptions.ThereAreDupeEmailInDb;
 import org.preproject.springboot.springbootpractice.model.User;
 import org.preproject.springboot.springbootpractice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +42,22 @@ public class RESTController {
         return userService.getUserById(id);
     }
 
-    @PutMapping(value ="/edit")
+    @PutMapping(value = "/edit")
     public ResponseEntity<?> editUser(@RequestBody User user) {
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/addUser")
-    private ResponseEntity<User> addUser(@RequestBody User user) {
+    @PostMapping(value = "/addUser", produces = "application/json")
+    private ResponseEntity<?> addUser(@RequestBody User user) {
         userService.saveUser(user);
+
+        try{
+            userService.validateUser(user);
+        } catch (ThereAreDupeEmailInDb e){
+            throw new ThereAreDupeEmailInDb();
+        }
+
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 

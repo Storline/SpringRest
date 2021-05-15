@@ -175,6 +175,19 @@
 
                 <!---EditModal-------->
 
+<!--                <script>-->
+<!--                    $('#editRole').select({-->
+<!--                        selectParent: $('#editModal'),-->
+<!--                    });-->
+<!--                    $(document).ready(function () {-->
+<!--                        $('option').each(function () {-->
+<!--                            if (this.value === $('#valueFromDb').val()) {-->
+<!--                                this.setAttribute('selected', 'selected');-->
+<!--                            }-->
+<!--                        })-->
+<!--                    })-->
+<!--                </script>-->
+
                 <div class="modal fade" id="editModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -204,7 +217,7 @@
                                             <select multiple class="form-control form-control-sm" name="editRole"
                                                     size=2 id="editRole">
                                                 <option value="ADMIN">ADMIN</option>
-                                                <option value="USER">USER</option>
+                                                <option value="USER" selected>USER</option>
                                             </select>
                                         </div>
                                         <div id="aaa" class="text-right">
@@ -215,8 +228,10 @@
                                 </div>
                             </div>
                            <script>
+                               document.getElementById("editModal")
+                                   .addEventListener("submit", btnEdit);
 
-                               function btnEdit() {
+                               async function btnEdit() {
 
                                    let user = {
                                        id: document.getElementById('id').value,
@@ -229,17 +244,23 @@
                                            .map(r => r.value))
                                    }
 
-                                   fetch("http://localhost:8080/rest/edit", {
+                                   let response = await fetch("http://localhost:8080/rest/edit", {
                                        method: "PUT",
                                        headers: {
                                            'Accept': 'application/json',
                                            'Content-Type': 'application/json'
                                        },
                                        body: JSON.stringify(user)
-
                                    })
-                                   $("#editModal .close").click();
-                                   resetTable();
+                                   if (response.ok){
+                                       $("#editModal.close").click();
+                                       resetTable();
+                                       getUsers();
+                                   } else {
+                                       $(".error").remove();
+                                       $('#editEmail').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')
+                                   }
+
                                }
 
                            </script>
@@ -287,6 +308,8 @@
                                 </div>
                             </div>
                             <script>
+                                document.getElementById("deleteModal")
+                                    .addEventListener("submit", btnDelete);
 
                                 function btnDelete() {
                                     fetch("http://localhost:8080/rest/delete/" + document.getElementById('delId').value, {
@@ -381,7 +404,7 @@
                                 document.getElementById("newUserForm")
                                     .addEventListener("submit", newUserForm);
 
-                                function newUserForm(el){
+                                async function newUserForm(el) {
                                     el.preventDefault();
 
                                     let name = document.getElementById("addName").value;
@@ -392,7 +415,7 @@
                                     let roles = selectRole(Array.from(document.getElementById("addRole").selectedOptions)
                                         .map(r => r.value));
 
-                                    fetch("http://localhost:8080/rest/addUser", {
+                                    let response = await fetch("http://localhost:8080/rest/addUser", {
                                         method: "POST",
                                         headers: {
                                             'Accept': 'application/json',
@@ -407,11 +430,14 @@
                                             roles: roles
                                         })
                                     })
-                                        .then(() => {
-                                            document.getElementById("usersTab").click();
-                                            getUsers();
-                                            document.getElementById("newUserForm").reset();
-                                        })
+                                    if (response.ok) {
+                                        document.getElementById("usersTab").click();
+                                        getUsers();
+                                        document.getElementById("newUserForm").reset();
+                                    } else {
+                                    $(".error").remove();
+                                    $('#newUserForm').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')
+                                    }
                                 }
                             </script>
 
