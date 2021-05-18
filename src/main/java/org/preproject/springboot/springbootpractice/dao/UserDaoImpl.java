@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return em.createQuery("from User", User.class)
+        return em.createQuery("select user from User user inner join fetch user.roles as roles", User.class)
                 .getResultList()
                 .stream().distinct()
                 .collect(Collectors.toList());
