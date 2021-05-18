@@ -1,7 +1,6 @@
 package org.preproject.springboot.springbootpractice.model;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

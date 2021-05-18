@@ -51,14 +51,7 @@ public class RESTController {
     @PostMapping(value = "/addUser", produces = "application/json")
     private ResponseEntity<?> addUser(@RequestBody User user) {
         userService.saveUser(user);
-
-        try{
-            userService.validateUser(user);
-        } catch (ThereAreDupeEmailInDb e){
-            throw new ThereAreDupeEmailInDb();
-        }
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/delete/{id}")

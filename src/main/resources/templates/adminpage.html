@@ -253,9 +253,8 @@
                                        body: JSON.stringify(user)
                                    })
                                    if (response.ok){
-                                       $("#editModal.close").click();
+                                       $("#editModal .close").click();
                                        resetTable();
-                                       getUsers();
                                    } else {
                                        $(".error").remove();
                                        $('#editEmail').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')
@@ -389,11 +388,11 @@
                                                 <select multiple class="form-control form-control-sm" name="addRole"
                                                         size=2 id="addRole">
                                                     <option value="ADMIN">ADMIN</option>
-                                                    <option value="USER">USER</option>
+                                                    <option value="USER" selected>USER</option>
                                                 </select>
                                             </div>
 
-                                            <button id="butt" type="submit" onclick="addNewUser()" class="btn btn-success">Add new user</button>
+                                            <button id="butt" type="submit" class="btn btn-success">Add new user</button>
                                             <br>
                                         </div>
                                     </div>
@@ -407,13 +406,17 @@
                                 async function newUserForm(el) {
                                     el.preventDefault();
 
-                                    let name = document.getElementById("addName").value;
-                                    let lastName = document.getElementById("addLastName").value;
-                                    let username = document.getElementById("addUsername").value;
-                                    let email = document.getElementById("addEmail").value;
-                                    let password = document.getElementById("addPassword").value;
-                                    let roles = selectRole(Array.from(document.getElementById("addRole").selectedOptions)
-                                        .map(r => r.value));
+
+                                    let user = {
+                                        name: document.getElementById("addName").value,
+                                        lastName: document.getElementById("addLastName").value,
+                                        username: document.getElementById("addUsername").value,
+                                        email: document.getElementById("addEmail").value,
+                                        password: document.getElementById("addPassword").value,
+                                        roles: selectRole(Array.from(document.getElementById("addRole").selectedOptions)
+                                            .map(r => r.value))
+                                    }
+
 
                                     let response = await fetch("http://localhost:8080/rest/addUser", {
                                         method: "POST",
@@ -421,19 +424,12 @@
                                             'Accept': 'application/json',
                                             'Content-Type': 'application/json'
                                         },
-                                        body: JSON.stringify({
-                                            name: name,
-                                            lastName: lastName,
-                                            username: username,
-                                            email: email,
-                                            password: password,
-                                            roles: roles
-                                        })
+                                        body: JSON.stringify(user)
                                     })
-                                    if (response.ok) {
-                                        document.getElementById("usersTab").click();
+
+                                    if (response.status < 399) {
                                         getUsers();
-                                        document.getElementById("newUserForm").reset();
+                                        resetTable();
                                     } else {
                                     $(".error").remove();
                                     $('#newUserForm').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')
