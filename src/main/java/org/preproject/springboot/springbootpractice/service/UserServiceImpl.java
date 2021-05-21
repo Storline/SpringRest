@@ -16,7 +16,7 @@ import java.util.*;
 
 @Service("userDetailsService")
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserDao service;
 
@@ -27,14 +27,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserServiceImpl(UserDao service){
         this.service = service;
     }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", email)));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
-    }
-
 
     @Override
     public User getUserById(Long id) {
@@ -67,9 +59,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateUser(User updatedUser) {
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        service.updateUser(updatedUser);
+    public void updateUser(User updatedUser, Long id) {
+        User userToBeUpdated = service.getUserById(id);
+
+        if ((updatedUser.getPassword()).length()>1){
+            userToBeUpdated.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        } else {
+            service.saveUser(userToBeUpdated);
+        }
     }
 
     @Override
@@ -88,24 +85,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<String, String> validateUser(User user) {
-        Map<String, String> errorMap = new HashMap<>();
-        if (user.getEmail().isEmpty()) {
-            errorMap.put("emailIsEmpty", "E-Mail Is Empty!");
+    public boolean isUniqueEmailViolated(Long id, String email) {
+        boolean isUniqueEmailViolated = false;
+
+        Optional<User> findUserByEmail = service.findByEmail(email);
+        boolean isCreatingNew = (id == null || id == 0);
+
+        if (isCreatingNew){
+            if(findUserByEmail.isPresent()) isUniqueEmailViolated = true;
+        } else {
+            if(findUserByEmail.isPresent()) {
+                if (findUserByEmail.get().getId().equals(id)) {
+                    isUniqueEmailViolated = true;
+                }
+            }
         }
-        if (!EmailValidator.validateEmail(user.getEmail())) {
-            errorMap.put("emailNotValid", "Email Not Valid!");
-        }
-        else if (service.findByEmail(user.getEmail()).isPresent()) {
-            errorMap.put("userExists", "An account for that email already exists.");
-        }
-        if (user.getName().isEmpty())
-            errorMap.put("firstNameIsEmpty", "First Name Is Empty!");
-        if (user.getLastName().isEmpty())
-            errorMap.put("lastNameIsEmpty", "Last Name Is Empty!");
-        if (user.getPassword().isEmpty())
-            errorMap.put("passwordIsEmpty", "Password Is Empty!");
-        return errorMap;
+        return isUniqueEmailViolated;
     }
 
 }

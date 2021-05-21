@@ -16,7 +16,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    void updateUser(User updatedUser);
+    void updateUser(User updatedUser, Long id);
 
     Optional<User> findByUsername(String username);
 
@@ -28,5 +28,5 @@ public interface UserService {
 
     Role getRoleById(Long id);
 
-    Map<String, String> validateUser(User user);
+    boolean isUniqueEmailViolated(Long id, String email);
 }

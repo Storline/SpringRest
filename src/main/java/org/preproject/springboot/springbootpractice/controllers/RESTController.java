@@ -40,9 +40,9 @@ public class RESTController {
         return userService.getUserById(id);
     }
 
-    @PutMapping(value = "/edit")
-    public ResponseEntity<?> editUser(@RequestBody User user) {
-        userService.updateUser(user);
+    @PutMapping(value = "/edit/{id}")
+    public ResponseEntity<?> editUser(@RequestBody User user, @PathVariable Long id) {
+        userService.updateUser(user, id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
