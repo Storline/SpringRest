@@ -19,7 +19,6 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" style="color: white" content="viewUserInfo()">
                 <div class="navbar-brand">
-<!--                    <span class="headerMailAndRole" style="color: white"></span>-->
                     <span class="headerEmail" style="color: white"></span>
                     <span class="headerRole" style="color: white"></span>
                 </div>
@@ -34,19 +33,6 @@
                     }
                    viewUserInfo();
                 </script>
-<!--                <script>-->
-
-<!--                    jQuery(async function viewUserInfo(){-->
-<!--                        const headerUrl = "http://localhost:8080/admin";-->
-<!--                        fetch(headerUrl)-->
-<!--                            .then((res) => res.json())-->
-<!--                            .then((user) => {-->
-<!--                                document.getElementById("headerMailAndRole").innerHTML = <td>${user.get().email}</td> +-->
-<!--                                    " with roles: " +-->
-<!--                                    <td>${user.roles.map(r => r.role.replace('ROLE_', '')).join(', ')}</td>;-->
-<!--                            })-->
-<!--                    });-->
-<!--                </script>-->
             </li>
         </ul>
 
