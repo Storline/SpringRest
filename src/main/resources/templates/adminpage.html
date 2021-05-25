@@ -181,9 +181,7 @@
                                             })
                                         });
                                     }
-                                    fillModal(id)
-
-
+                                    fillModal(id);
                                 </script>
 
                             </table>
@@ -214,7 +212,7 @@
                                         <label for="editEmail"><b>Email</b></label>
                                         <input class="form-control text-center" type="email" name="email" id="editEmail" required>
                                         <label for="editPassword"><b>Password</b></label>
-                                        <input class="form-control text-center" type="password" name="password" value="" onfocus="this.value=''" id="editPassword">
+                                        <input class="form-control text-center" type="password" autocomplete="off" name="password" id="editPassword">
                                         <div class="pb-2">
                                         </div>
                                         <div class="form-group">
@@ -233,8 +231,6 @@
                                 </div>
                             </div>
                            <script>
-                               document.getElementById("editModal")
-                                   .addEventListener("submit", btnEdit);
 
                                async function btnEdit() {
 
@@ -245,11 +241,11 @@
                                        username: document.getElementById('editUsername').value,
                                        email: document.getElementById('editEmail').value,
                                        password: document.getElementById('editPassword').value,
-                                       roles: selectRole(Array.from(document.getElementById("editRole").selectedOptions)
+                                       roles: selectRole(Array.from(document.getElementById('editRole').selectedOptions)
                                            .map(r => r.value))
                                    }
 
-                                   let response = await fetch("http://localhost:8080/rest/edit", {
+                                   let response = await fetch("http://localhost:8080/rest/edit/" + document.getElementById('id').value, {
                                        method: "PUT",
                                        headers: {
                                            'Accept': 'application/json',
@@ -259,12 +255,12 @@
                                    })
                                    if (response.ok){
                                        $("#editModal .close").click();
+                                       $('.modal-backdrop').remove();
                                        resetTable();
                                    } else {
                                        $(".error").remove();
                                        $('#editEmail').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')
                                    }
-
                                }
 
                            </script>
@@ -293,7 +289,9 @@
                                         <label for="delUsername"><b>Username</b></label>
                                         <input class="form-control text-center" type="text" name="username"  id="delUsername" readonly>
                                         <label for="delEmail"><b>Email</b></label>
-                                        <input class="form-control alert-warning text-center" type="email" name="email" id="delEmail" readonly>
+                                        <input class="form-control alert-warning text-center" type="text" name="email" id="delEmail" readonly>
+                                        <label for="delPassword"><b>Password</b></label>
+                                        <input class="form-control text-center" type="text" name="password" id="delPassword" readonly>
                                         <div class="pb-2">
                                         </div>
                                         <div class="form-group">
@@ -312,8 +310,6 @@
                                 </div>
                             </div>
                             <script>
-                                document.getElementById("deleteModal")
-                                    .addEventListener("submit", btnDelete);
 
                                 function btnDelete() {
                                     fetch("http://localhost:8080/rest/delete/" + document.getElementById('delId').value, {
@@ -325,6 +321,7 @@
                                     })
 
                                     $("#deleteModal .close").click();
+                                    $('.modal-backdrop').remove();
                                     resetTable();
                                 }
 
@@ -433,8 +430,9 @@
                                     })
 
                                     if (response.status < 399) {
+                                        document.getElementById("usersTab").click();
                                         getUsers();
-                                        resetTable();
+                                        document.getElementById("newUserForm").reset();
                                     } else {
                                     $(".error").remove();
                                     $('#newUserForm').after('<span class = "error" xmlns="http://www.w3.org/1999/html" style="color: darkred"> Email is already taken </br> </span>')

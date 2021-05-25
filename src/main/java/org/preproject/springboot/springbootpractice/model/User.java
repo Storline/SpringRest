@@ -5,6 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -20,12 +22,13 @@ public class User implements UserDetails {
 
     private String lastName;
 
-    @Column(name = "email", unique = true)
-    @NotNull
+    @Column(name = "email", unique = true, nullable = false)
+    @Email(message = "Email должены быть корректным")
+    @NotBlank
     private String email;
 
     private String username;
-
+    
     private String password;
 
 

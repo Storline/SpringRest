@@ -2,6 +2,8 @@ package org.preproject.springboot.springbootpractice.dao;
 
 import org.preproject.springboot.springbootpractice.model.Role;
 import org.preproject.springboot.springbootpractice.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+
+    private PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager em;
@@ -67,7 +71,7 @@ public class UserDaoImpl implements UserDao {
             user =  (User) em.createQuery("select user from User user inner join fetch user.roles as roles where user.email = :email")
                     .setParameter("email", email)
                     .getSingleResult();
-        } catch (NoResultException nre) {
+        } catch (NoResultException ignored) {
         }
         return Optional.ofNullable(user);
     }

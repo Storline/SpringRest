@@ -40,67 +40,55 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-    <div class="row" style="height: 100vh">
+<div class="tab-pane active" id="users" role="tabpanel">
+    <h1 class="page-header bold">Admin panel</h1>
 
+    <div class="card">
+        <div class="card-header"><h5>All users</h5></div>
+         <div class="card-body bg-white">
+             <table class="table table-striped" id="allUsersTable">
+                 <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
 
-        <div class="col-md-10 bg-light">
-            <div class="container align-content-center mt-1">
+                    </tr>
 
-                <div>
-                    <h1 class="font-weight-bolder"> User information-panel </h1>
-                </div>
+                </thead>
+                <tbody id="usersTable">
 
-                <div class="card">
+                </tbody>
+            </table>
+            <script>
+                function showUser() {
+                    const showUserURL = 'http://localhost:8080/rest/infoUser';
+                    fetch(showUserURL)
+                        .then((res) => res.json())
+                        .then((user) => {
 
-                    <div class="card-block">
-                        <table class="table">
-                            <div>
-                                <h3 class="font-weight-normal"> Users info </h3>
-                            </div>
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Last name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-
-                            </tr>
-
-                            </thead>
-                            <tbody id="usersTable">
-
-                            </tbody>
-                        </table>
-                        <script>
-                            function showUser() {
-                                const showUserURL = 'http://localhost:8080/rest/infoUser';
-                                fetch(showUserURL)
-                                    .then((res) => res.json())
-                                    .then((user) => {
-
-                                        let temp = "<tr>";
-                                        temp += `
-                                            <td>${user.id}</td>
-                                            <td>${user.name}</td>
-                                            <td>${user.lastName}</td>
-                                            <td>${user.username}</td>
-                                            <td>${user.email}</td>
-                                            <td>${user.roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>
-                                        `;
-                                        temp += "<tr>";
-                                        document.getElementById("userTable").innerHTML = temp;
-                                    })
-                                }
-                            showUser();
-                        </script>
-                    </div>
-                </div>
-            </div>
+                            let temp = "<tr>";
+                            temp += `
+                                <td>${user.id}</td>
+                                <td>${user.name}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.username}</td>
+                                <td>${user.email}</td>
+                                <td>${user.roles.map(r => r.role.replace('ROLE_','')).join(', ')}</td>
+                            `;
+                            temp += "<tr>";
+                            document.getElementById("usersTable").innerHTML = temp;
+                        })
+                    }
+                showUser();
+            </script>
         </div>
     </div>
 </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
